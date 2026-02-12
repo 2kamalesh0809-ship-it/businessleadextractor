@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search History - Promptix</title>
+    <script>
+        (function () {
+            const theme = localStorage.getItem('theme') || 'light';
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark-mode');
+            }
+        })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .history-page {
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 40px;
+            background: var(--card-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-premium);
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        .history-header h1 {
+            font-size: 2rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--primary-main);
+        }
+
+        .history-table th {
+            text-align: left;
+            padding: 15px;
+            color: var(--text-secondary);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .history-table td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+
+        .history-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .btn-view {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-state p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body class="dark-mode">
+    <div class="app-wrapper">
+        <div class="app-container">
+            <div class="history-page">
+                <div class="history-header">
+                    <div>
+                        <h1>Search History</h1>
+                        <p style="color: var(--text-secondary);">Your recently completed searches</p>
+                    </div>
+                    <a href="index.html" class="back-link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                        Dashboard
+                    </a>
+                </div>
+
+                <div id="history-loading" style="text-align: center; padding: 40px;">
+                    <div class="spinner"></div>
+                    <p style="margin-top: 15px; color: var(--text-secondary);">Fetching your history...</p>
+                </div>
+
+                <div id="history-content" class="hidden">
+                    <div class="table-container">
+                        <table class="history-table" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Keyword</th>
+                                    <th>Location</th>
+                                    <th>Leads</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-body">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="empty-state" class="empty-state hidden">
+                    <p>You haven't performed any searches yet.</p>
+                    <a href="index.html" class="btn btn-primary">Start Searching</a>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const API_BASE_URL = 'http://localhost:5000';
+
+            async function fetchHistory() {
+                const token = localStorage.getItem('authToken');
+                if (!token) {
+                    window.location.href = 'index.html';
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`${API_BASE_URL}/api/search/history`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    if (!response.ok) throw new Error('Failed to fetch history');
+
+                    const data = await response.json();
+                    renderHistory(data);
+                } catch (error) {
+                    console.error(error);
+                    document.getElementById('history-loading').innerHTML =
+                        `<p style="color: #ef4444;">Error loading history. Please refresh.</p>`;
+                }
+            }
+
+            function renderHistory(history) {
+                const loading = document.getElementById('history-loading');
+                const content = document.getElementById('history-content');
+                const empty = document.getElementById('empty-state');
+                const body = document.getElementById('history-body');
+
+                loading.classList.add('hidden');
+
+                if (!history || history.length === 0) {
+                    empty.classList.remove('hidden');
+                    return;
+                }
+
+                content.classList.remove('hidden');
+                body.innerHTML = history.map(item => {
+                    const date = new Date(item.timestamp).toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+
+                    return `
+                    <tr>
+                        <td style="font-size: 0.85rem; color: var(--text-secondary);">${date}</td>
+                        <td><strong style="color: var(--primary-main);">${item.keyword}</strong></td>
+                        <td>${item.location}</td>
+                        <td><span class="badge">${item.resultCount}</span></td>
+                        <td>
+                            <a href="index.html?keyword=${encodeURIComponent(item.keyword)}&location=${encodeURIComponent(item.location)}" 
+                               class="btn btn-sm btn-outline btn-view">
+                                View Search
+                            </a>
+                        </td>
+                    </tr>
+                `;
+                }).join('');
+            }
+
+            fetchHistory();
+        </script>
+    </div>
+    </div>
+    </div>
+
+    <footer class="app-footer">
+        <div class="footer-content">
+            <p>&copy; 2026 <a href="https://promptix.pro/" target="_blank"
+                    style="color: inherit; text-decoration: none; border-bottom: 1px dashed rgba(255,255,255,0.2);">Promptix</a>.
+                All rights reserved.</p>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="refund.html">Refund Policy</a>
+                <a href="support.html">Contact Support</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

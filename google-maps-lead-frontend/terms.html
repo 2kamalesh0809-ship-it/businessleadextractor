@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - Promptix</title>
+    <script>
+        (function () {
+            const theme = localStorage.getItem('theme') || 'light';
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark-mode');
+            }
+        })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .legal-page {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .legal-header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 30px;
+        }
+
+        .legal-header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .legal-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .simple-summary {
+            background: rgba(147, 51, 234, 0.05);
+            border: 1px dashed var(--primary-main);
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+        }
+
+        .simple-summary h2 {
+            font-size: 1.2rem;
+            color: var(--primary-main);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legal-section {
+            margin-bottom: 40px;
+        }
+
+        .legal-section h3 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .legal-section p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .legal-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .legal-section li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+        }
+
+        .legal-section li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--primary-main);
+            font-weight: bold;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--primary-main);
+        }
+
+        @media (max-width: 768px) {
+            .legal-page {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+
+            .legal-header h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-wrapper">
+        <div class="app-container" style="max-width: 900px;">
+            <a href="index.html" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Back to Dashboard
+            </a>
+
+            <div class="legal-page">
+                <div class="legal-header">
+                    <div style="position: absolute; top: 20px; right: 20px;">
+                        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                            <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="5"></circle>
+                                <line x1="12" y1="1" x2="12" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="23"></line>
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                <line x1="1" y1="12" x2="3" y2="12"></line>
+                                <line x1="21" y1="12" x2="23" y2="12"></line>
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                            </svg>
+                            <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" style="display: none;">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <h1>Terms of Service</h1>
+                    <p>Last Updated: February 10, 2026</p>
+                </div>
+
+                <div class="simple-summary">
+                    <h2>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        The "Simple Rules" Version
+                    </h2>
+                    <p>Welcome to Promptix! By using our platform, you agree to play by the rules. We provide the tools
+                        to
+                        help you find business leads, and in return, we ask that you use the service fairly and
+                        responsibly. No hidden traps, just a clear understanding of how we work together.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h3>1. Description of Service</h3>
+                    <p>Promptix is a SaaS platform designed to help you extract business contact information from public
+                        sources. Here’s how it works:</p>
+                    <ul>
+                        <li><strong>Public Information:</strong> Our platform automates the process of finding and
+                            organizing data that is already publicly available on Google Maps.</li>
+                        <li><strong>Automated Extraction:</strong> We utilize trusted third-party services, including
+                            <strong>Apify</strong>, to perform the technical work of gathering this information
+                            efficiently.
+                        </li>
+                        <li><strong>No Guarantees:</strong> While we aim for perfection, we cannot guarantee the 100%
+                            accuracy or constant availability of the data, as it depends on external sources and
+                            automated
+                            processes.</li>
+                    </ul>
+                </div>
+
+                <div class="legal-section">
+                    <h3>2. Account & Usage</h3>
+                    <p>To use Promptix, you must create an account. You are responsible for keeping your login
+                        credentials safe and ensuring all information provided is accurate.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h3>3. Prohibited Usage</h3>
+                    <p>We believe in ethical data extraction. You agree <strong>not</strong> to use Promptix for:</p>
+                    <ul>
+                        <li><strong>Illegal Activities:</strong> Any purpose that violates local, state, or
+                            international laws.</li>
+                        <li><strong>Terms Violation:</strong> Actions that violate the terms of service of any
+                            third-party platforms (like Google Maps).</li>
+                        <li><strong>Automation Abuse:</strong> "Flooding" our systems or using excessive automation that
+                            disrupts service for others.</li>
+                        <li><strong>Unauthorized Resale:</strong> Reselling our raw data or services where prohibited by
+                            law or without our explicit permission.</li>
+                    </ul>
+                </div>
+
+                <div class="legal-section">
+                    <h3>4. Usage Limits & Credits</h3>
+                    <p>Promptix operates on a credit-based access model to ensure fair use of our resources:</p>
+                    <ul>
+                        <li><strong>Credit Consumption:</strong> Each successful search consumes credits as defined by
+                            your
+                            current plan. Credits are deducted only when data is successfully delivered to your
+                            dashboard.
+                        </li>
+                        <li><strong>Non-Transferable:</strong> Credits are tied to your specific account and cannot be
+                            transferred, sold, or shared with other users.</li>
+                        <li><strong>Expiration & Changes:</strong> Depending on your subscription plan, credits may have
+                            an
+                            expiration date or may be subject to change if you switch plans. Please review your specific
+                            plan details in the billing section.</li>
+                    </ul>
+                </div>
+
+                <div class="legal-section">
+                    <h3>5. Payments & Refunds</h3>
+                    <p>We strive for transparency in our billing process:</p>
+                    <ul>
+                        <li><strong>Secure Processing:</strong> All payments are processed through secure,
+                            industry-leading
+                            third-party gateways (such as Razorpay). We never see or store your full payment card
+                            details.
+                        </li>
+                        <li><strong>Refund Policy:</strong> Refunds are subject to our internal review and refund
+                            policy.
+                            Because credits represent immediate access to lead extraction resources, <strong>we
+                                generally do
+                                not offer refunds once credits have been consumed</strong> for successful searches.</li>
+                        <li><strong>Service Continuity:</strong> If a technical failure on our end prevents a search
+                            from
+                            completing, credits will not be deducted, or will be restored to your account.</li>
+                    </ul>
+                </div>
+
+                <div class="legal-section">
+                    <h3>6. Data Ownership & Responsibility</h3>
+                    <p>We respect your work and your leads:</p>
+                    <ul>
+                        <li><strong>Your Leads:</strong> Any business data you extract using Promptix belongs to you. We
+                            do
+                            not claim ownership of your specific search results or lead lists.</li>
+                        <li><strong>Compliance:</strong> You are solely responsible for ensuring that your use of the
+                            extracted data (such as cold emailing or calling) complies with your local laws, including
+                            anti-spam regulations (like GDPR or CAN-SPAM).</li>
+                        <li><strong>Third-Party Data:</strong> While the lead list is yours, the underlying data is
+                            sourced
+                            from Google Maps. You agree to respect their terms of service regarding the use of their
+                            maps
+                            and business listings.</li>
+                    </ul>
+                </div>
+
+                <div class="legal-section">
+                    <h3>7. Proprietary Rights</h3>
+                    <p>Promptix is our craft. The software, design, logos, and technology behind this platform are the
+                        exclusive property of Promptix and its licensors. You are granted a limited, non-exclusive
+                        license
+                        to use the platform as intended—please do not copy, modify, or distribute our source code or
+                        branding without permission.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h3>8. Account Suspension & Termination</h3>
+                    <p>We reserve the right to protect our community and platform. We may suspend or terminate your
+                        account at any time if:</p>
+                    <ul>
+                        <li>You violate these Terms of Service.</li>
+                        <li>Your usage patterns suggest abuse or automated "scraping of our scraper."</li>
+                        <li>We are required to do so by law.</li>
+                    </ul>
+                </div>
+
+                <div class="legal-section">
+                    <h3>9. Limitation of Liability & Disclaimer</h3>
+                    <p>Promptix is provided on an <strong>"as-is"</strong> and <strong>"as-available"</strong> basis. To
+                        the maximum extent permitted by law:</p>
+                    <ul>
+                        <li><strong>No Uptime Guarantee:</strong> We do not guarantee that the service will be
+                            uninterrupted, timely, or error-free.</li>
+                        <li><strong>Data Accuracy:</strong> We are not liable for any inaccuracies, incompleteness, or
+                            obsolescence of the data extracted from third-party sources.</li>
+                        <li><strong>No Consequential Losses:</strong> Promptix is not responsible for any indirect,
+                            incidental, or consequential damages resulting from your use of the platform.</li>
+                    </ul>
+                </div>
+
+                <div class="legal-section">
+                    <h3>10. Updates to Terms</h3>
+                    <p>As we grow, we might update these terms. If we make big changes, we'll let you know via email or
+                        a
+                        notice on the dashboard. Continued use of the platform means you agree to the new rules.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h3>11. Contact Us</h3>
+                    <p>Have questions about these rules? We're happy to explain. Drop us a line at
+                        <strong>infopromptix@gmail.com</strong>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="app-footer">
+        <div class="footer-content">
+            <p>&copy; 2026 <a href="https://promptix.pro/" target="_blank"
+                    style="color: inherit; text-decoration: none; border-bottom: 1px dashed rgba(255,255,255,0.2);">Promptix</a>.
+                All rights reserved.</p>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="refund.html">Refund Policy</a>
+                <a href="support.html">Contact Support</a>
+            </div>
+        </div>
+    </footer>
+    <script src="theme.js"></script>
+</body>
+
+</html>
