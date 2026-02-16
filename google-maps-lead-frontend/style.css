@@ -718,92 +718,8 @@ html.dark-mode .app-header h1 {
     z-index: 100;
 }
 
-@media (max-width: 767px) {
-    .menu-toggle {
-        display: flex;
-        position: relative;
-        top: 0;
-        right: 0;
-        z-index: 2001;
-    }
+/* Mobile overrides correctly moved below base rules */
 
-    .header-actions-wrapper {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        /* Hidden off-screen */
-        width: 280px;
-        height: 100vh;
-        background: var(--card-bg);
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 100px 30px;
-        gap: 30px;
-        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        backdrop-filter: blur(20px);
-        z-index: 2000;
-        margin-top: 0;
-    }
-
-    .header-actions-wrapper.active {
-        right: 0;
-    }
-
-    .header-nav {
-        flex-direction: column;
-        align-items: stretch;
-        width: 100%;
-        border-right: none;
-        border-bottom: 2px solid var(--border-color);
-        padding-right: 0;
-        padding-bottom: 25px;
-        gap: 15px;
-    }
-
-    .nav-link,
-    .nav-link-btn {
-        width: 100%;
-        justify-content: flex-start;
-        padding: 12px 20px;
-    }
-
-    .user-profile {
-        flex-direction: column;
-        align-items: flex-start;
-        background: transparent !important;
-        border: none !important;
-        box-shadow: none !important;
-        padding: 0 !important;
-        gap: 20px !important;
-        width: 100%;
-    }
-
-    .user-account-badge {
-        flex-direction: column;
-        align-items: flex-start;
-        background: rgba(255, 255, 255, 0.03);
-        padding: 15px 20px;
-        width: 100%;
-        border-radius: 16px;
-    }
-
-    .btn-upgrade {
-        width: 100%;
-        margin-top: 10px;
-    }
-
-    .login-trigger {
-        font-size: 0.75rem !important;
-        padding: 6px 12px !important;
-        min-height: unset !important;
-        background: var(--primary-main) !important;
-        color: white !important;
-        border: none !important;
-        margin-right: 4px;
-        /* Space between Login and Menu icon */
-    }
-}
 
 .header-nav {
     display: flex;
@@ -901,6 +817,90 @@ html.dark-mode .app-header h1 {
     background-color: var(--text-primary);
     border-radius: 10px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- Mobile Header Overrides (Must be after base rules) --- */
+@media (max-width: 767px) {
+    .menu-toggle {
+        display: flex;
+        /* Now correctly overrides display: none */
+    }
+
+    .header-actions-wrapper {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 280px;
+        height: 100vh;
+        background: var(--card-bg);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 100px 30px;
+        gap: 30px;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        backdrop-filter: blur(20px);
+        z-index: 2000;
+        margin-top: 0;
+    }
+
+    .header-actions-wrapper.active {
+        right: 0;
+    }
+
+    .header-nav {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        border-right: none;
+        border-bottom: 2px solid var(--border-color);
+        padding-right: 0;
+        padding-bottom: 25px;
+        gap: 15px;
+    }
+
+    .nav-link,
+    .nav-link-btn {
+        width: 100%;
+        justify-content: flex-start;
+        padding: 12px 20px;
+    }
+
+    .user-profile {
+        flex-direction: column;
+        align-items: flex-start;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        gap: 20px !important;
+        width: 100%;
+    }
+
+    .user-account-badge {
+        flex-direction: column;
+        align-items: flex-start;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 15px 20px;
+        width: 100%;
+        border-radius: 16px;
+    }
+
+    .btn-upgrade {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .login-trigger {
+        font-size: 0.75rem !important;
+        padding: 6px 12px !important;
+        min-height: unset !important;
+        background: var(--primary-main) !important;
+        color: white !important;
+        border: none !important;
+        margin-right: 4px;
+        /* Space between Login and Menu icon */
+    }
 }
 
 /* Active State for X */
