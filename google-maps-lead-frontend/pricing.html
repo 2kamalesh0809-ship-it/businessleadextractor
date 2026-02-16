@@ -322,7 +322,7 @@
                             <polyline points="20 6 9 17 4 12"></polyline>
                         </svg> Community Support</li>
                 </ul>
-                <button class="btn btn-outline btn-full" disabled>Current Plan</button>
+                <button class="btn btn-primary btn-full upgrade-trigger" data-plan="Free">Get Started</button>
             </div>
 
             <!-- Starter Plan -->
@@ -377,13 +377,14 @@
                 </ul>
                 <button class="btn btn-primary btn-full upgrade-trigger" data-plan="Pro">Go Pro</button>
             </div>
+
         </div>
     </div>
 
     <!-- Razorpay Checkout Script -->
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="config.js"></script>
     <script>
-        const API_BASE_URL = 'http://localhost:5000';
 
         // --- Authentication Guard ---
         const token = localStorage.getItem('authToken');
@@ -423,12 +424,17 @@
             if (!token) return;
 
             try {
-                const res = await fetch(`${API_BASE_URL}/api/user/profile`, {
+                const res = await fetch(`${API_BASE_URL}/api/user/me`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 const user = await res.json();
                 if (res.ok) {
                     updatePricingUI(user.plan);
+                } else if (res.status === 401) {
+                    // Token invalid or expired
+                    localStorage.removeItem('authToken');
+                    localStorage.removeItem('user');
+                    window.location.href = 'index.html';
                 }
             } catch (err) {
                 console.error('Failed to fetch user data:', err);
@@ -438,18 +444,38 @@
         function updatePricingUI(currentPlan) {
             const planKey = (currentPlan || 'FREE').toUpperCase();
             document.querySelectorAll('.pricing-card').forEach(card => {
-                const planNameStr = card.querySelector('.plan-name').textContent.toUpperCase();
+                const planNameBlock = card.querySelector('.plan-name');
+                if (!planNameBlock) return;
+
+                const planNameStr = planNameBlock.textContent.toUpperCase();
                 const button = card.querySelector('button');
+                if (!button) return;
 
                 if (planNameStr === planKey) {
                     button.textContent = 'Current Plan';
                     button.disabled = true;
-                    button.classList.remove('btn-primary');
+                    button.classList.remove('btn-primary', 'upgrade-trigger');
                     button.classList.add('btn-outline');
-                } else if (planKey === 'PRO' && planNameStr === 'STARTER') {
-                    button.disabled = true;
-                    button.textContent = 'N/A';
-                    button.classList.add('btn-disabled');
+                } else {
+                    // Not current plan
+                    if (planNameStr === 'FREE') {
+                        button.textContent = 'Included';
+                        button.disabled = true;
+                        button.classList.remove('btn-primary', 'upgrade-trigger');
+                        button.classList.add('btn-outline');
+                    } else if (planKey === 'PRO' && planNameStr === 'STARTER') {
+                        // Hierarchy: If you are already PRO, STARTER is not applicable/needed
+                        button.textContent = 'Included'; // Better than N/A
+                        button.disabled = true;
+                        button.classList.remove('btn-primary', 'upgrade-trigger');
+                        button.classList.add('btn-outline');
+                    } else {
+                        // Upgradeable
+                        button.textContent = (planNameStr === 'PRO' || planNameStr === 'STARTER') ? 'Upgrade Now' : 'Get Started';
+                        button.disabled = false;
+                        button.classList.add('btn-primary', 'upgrade-trigger');
+                        button.classList.remove('btn-outline', 'btn-disabled');
+                    }
                 }
             });
         }
@@ -487,7 +513,14 @@
                 });
 
                 const orderData = await orderRes.json();
-                if (!orderRes.ok) throw new Error(orderData.message || 'Order creation failed');
+                if (!orderRes.ok) {
+                    if (orderRes.status === 401) {
+                        localStorage.removeItem('authToken');
+                        window.location.href = 'index.html';
+                        return;
+                    }
+                    throw new Error(orderData.message || 'Order creation failed');
+                }
 
                 // 2. Initialize Razorpay
                 const options = {

@@ -229,15 +229,16 @@
                         <li>Basic Support</li>
                         <li>Standard Export</li>
                     </ul>
-                    <button id="upgrade-free-btn" class="btn btn-outline btn-full" disabled>Current Plan</button>
+                    <button id="upgrade-free-btn" class="btn btn-primary btn-full upgrade-trigger" data-plan="Free">Get
+                        Started</button>
                 </div>
                 <div class="pricing-card starter">
                     <div class="plan-name">Starter</div>
-                    <div class="plan-price">₹499<span>/one-time</span></div>
+                    <div class="plan-price">₹699<span>/one-time</span></div>
                     <ul class="plan-features">
                         <li>100 Search Credits</li>
+                        <li>(50,000 Total Leads)</li>
                         <li>Priority Support</li>
-                        <li>Advanced Email Extraction</li>
                         <li>Lifetime Access</li>
                     </ul>
                     <button id="upgrade-starter-btn" class="btn btn-primary btn-full">Get Started</button>
@@ -247,27 +248,12 @@
                     <div class="plan-name">Pro</div>
                     <div class="plan-price">₹1499<span>/one-time</span></div>
                     <ul class="plan-features">
-                        <li>500 Search Credits</li>
-                        <li>No Daily Search Cap</li>
+                        <li>400 Search Credits</li>
+                        <li>(200,000 Total Leads)</li>
                         <li>24/7 Priority Support</li>
-                        <li>Advanced Data Enrichment</li>
                         <li>Lifetime Access</li>
                     </ul>
                     <button id="upgrade-pro-btn" class="btn btn-primary btn-full">Get Started</button>
-                </div>
-                <div class="pricing-card agency">
-                    <div class="popular-badge agency-badge">Best for Teams</div>
-                    <div class="plan-name">Agency</div>
-                    <div class="plan-price">₹3999<span>/one-time</span></div>
-                    <p class="plan-desc">Scale your lead generation with priority access and maximum credits.</p>
-                    <ul class="plan-features">
-                        <li>2000 Search Credits</li>
-                        <li>Priority Access (No Delay)</li>
-                        <li>Team Collaboration Tools</li>
-                        <li>API Access Support</li>
-                        <li>Lifetime Access</li>
-                    </ul>
-                    <button id="upgrade-agency-btn" class="btn btn-primary btn-full">Get Started</button>
                 </div>
             </div>
         </div>
@@ -319,6 +305,7 @@
 
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+    <script src="config.js"></script>
     <script src="script.js"></script>
 </body>
 

@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:5000';
+// Main JS logic
 
 document.addEventListener('DOMContentLoaded', () => {
     const searchForm = document.getElementById('search-form');
@@ -118,6 +118,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 updatePricingModalButtons(user.plan);
 
                 updateSearchesLeftDisplay();
+            } else if (res.status === 401) {
+                // Token invalid or expired
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('user');
+                // Optional: show toast or just silent logout
+                location.reload();
             }
         } catch (err) {
             console.error('Failed to fetch user data:', err);
@@ -141,22 +147,27 @@ document.addEventListener('DOMContentLoaded', () => {
             if (key === planKey) {
                 btn.textContent = 'Current Plan';
                 btn.disabled = true;
-                btn.classList.add('btn-disabled');
-                btn.classList.remove('btn-primary');
                 btn.classList.add('btn-outline');
+                btn.classList.remove('btn-primary');
             } else {
-                // Paid plans that aren't current
-                if (key !== 'FREE') {
+                // Not current plan
+                if (key === 'FREE') {
+                    btn.textContent = 'Included';
+                    btn.disabled = true;
+                    btn.classList.add('btn-outline');
+                    btn.classList.remove('btn-primary');
+                } else if (planKey === 'PRO' && key === 'STARTER') {
+                    // If on Pro, Starter features are included
+                    btn.textContent = 'Included';
+                    btn.disabled = true;
+                    btn.classList.add('btn-outline');
+                    btn.classList.remove('btn-primary');
+                } else {
+                    // Upgradeable
                     btn.textContent = 'Get Started';
                     btn.disabled = false;
                     btn.classList.remove('btn-disabled', 'btn-outline');
                     btn.classList.add('btn-primary');
-                } else {
-                    // Free plan that isn't current (implies user is on a paid plan)
-                    btn.textContent = 'Included';
-                    btn.disabled = true;
-                    btn.classList.add('btn-disabled', 'btn-outline');
-                    btn.classList.remove('btn-primary');
                 }
             }
         });
@@ -651,7 +662,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({
                     keyword,
                     location,
-                    limit: 50 // SerpApi free tier usually allows ~20 results per page, but we'll request up to 50 if applicable
+                    limit: 500 // SerpApi free tier usually allows ~20 results per page, but we'll request up to 500
                 })
             });
 

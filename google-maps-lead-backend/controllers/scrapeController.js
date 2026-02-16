@@ -46,7 +46,7 @@ const scrapeController = async (req, res) => {
         const startOffset = searchCount.length > 0 ? searchCount[0].total : 0;
 
         // 5. Call SerpApi Service
-        const requestedLimit = parseInt(req.body.limit) || 60; // Default to 60 (3 pages) to satisfy "50 leads" request
+        const requestedLimit = parseInt(req.body.limit) || 500; // Default to 500 (25 pages) to satisfy "500 leads" request
         console.log(`[ScrapeController] Request via SerpApi: ${keyword} in ${location} | Start Offset: ${startOffset} | Target Limit: ${requestedLimit}`);
         const leads = await searchGoogleMaps(normalizedKeyword, normalizedLocation, startOffset, requestedLimit);
 
