@@ -674,7 +674,16 @@ html.dark-mode .app-header h1 {
 .top-bar-right {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
+    /* Tighter gap for small screens */
+}
+
+@media (min-width: 480px) {
+
+    .top-bar-left,
+    .top-bar-right {
+        gap: 16px;
+    }
 }
 
 .fixed-logo-area {
@@ -785,11 +794,14 @@ html.dark-mode .app-header h1 {
     }
 
     .login-trigger {
-        width: 100%;
+        font-size: 0.75rem !important;
+        padding: 6px 12px !important;
+        min-height: unset !important;
         background: var(--primary-main) !important;
         color: white !important;
         border: none !important;
-        padding: 15px !important;
+        margin-right: 4px;
+        /* Space between Login and Menu icon */
     }
 }
 
@@ -865,16 +877,22 @@ html.dark-mode .app-header h1 {
     display: none;
     flex-direction: column;
     justify-content: space-around;
-    width: 32px;
-    height: 32px;
-    background: var(--surface-color);
-    border: 1px solid var(--border-color);
+    width: 36px;
+    height: 36px;
+    background: var(--primary-main);
+    /* Solid background for visibility */
+    border: 1px solid var(--primary-dark);
     border-radius: 8px;
     cursor: pointer;
-    padding: 6px;
+    padding: 8px;
     z-index: 2001;
     position: relative;
-    box-shadow: var(--shadow-soft);
+    box-shadow: 0 4px 10px rgba(139, 94, 60, 0.3);
+}
+
+.menu-toggle .hamburger-bar {
+    background-color: white;
+    /* White bars on dark background */
 }
 
 .hamburger-bar {
