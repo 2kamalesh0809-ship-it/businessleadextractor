@@ -31,8 +31,8 @@ router.post('/signup', async (req, res) => {
         // Create Token
         const token = jwt.sign(
             { userId: user._id },
-            process.env.JWT_SECRET,
-            { expiresIn: '1h' } // Token expires in 1 hour
+            process.env.JWT_SECRET || 'fallback_secret',
+            { expiresIn: '24h' }
         );
 
         res.status(201).json({
@@ -41,8 +41,8 @@ router.post('/signup', async (req, res) => {
         });
 
     } catch (err) {
-        console.error(err.message);
-        res.status(500).json({ message: 'Server Error' });
+        console.error('Signup Error Detail:', err);
+        res.status(500).json({ message: 'Signup Server Error: ' + err.message });
     }
 });
 
@@ -71,8 +71,8 @@ router.post('/login', async (req, res) => {
         // Create Token
         const token = jwt.sign(
             { userId: user._id },
-            process.env.JWT_SECRET,
-            { expiresIn: '1h' }
+            process.env.JWT_SECRET || 'fallback_secret',
+            { expiresIn: '24h' }
         );
 
         res.json({
@@ -81,8 +81,8 @@ router.post('/login', async (req, res) => {
         });
 
     } catch (err) {
-        console.error(err.message);
-        res.status(500).json({ message: 'Server Error' });
+        console.error('Login Error Detail:', err);
+        res.status(500).json({ message: 'Login Server Error: ' + err.message });
     }
 });
 
