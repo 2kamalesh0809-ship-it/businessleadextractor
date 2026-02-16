@@ -656,13 +656,13 @@ body {
 }
 
 .app-header h1 {
-    font-size: clamp(2.2rem, 10vw, 3.5rem);
+    font-size: clamp(1.8rem, 8vw, 3rem);
     /* Fluid responsive scaling */
     font-weight: 800;
     color: #4B2E1E;
     background: none;
     -webkit-text-fill-color: initial;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     letter-spacing: -0.01em;
     line-height: 1.1;
     filter: none;
@@ -677,7 +677,7 @@ html.dark-mode .app-header h1 {
 
 @media (min-width: 480px) {
     .app-header {
-        margin-bottom: 50px;
+        margin-bottom: 30px;
     }
 }
 
@@ -697,20 +697,50 @@ html.dark-mode .app-header h1 {
     }
 }
 
-.header-actions-wrapper {
-    position: absolute;
-    top: -60px;
-    right: 0;
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 30px;
+    padding: 10px 0;
+    position: relative;
+    z-index: 2001;
+}
+
+.top-bar-left,
+.top-bar-right {
     display: flex;
     align-items: center;
-    gap: 30px;
+    gap: 12px;
+}
+
+.fixed-logo-area {
+    display: flex;
+    align-items: center;
+}
+
+.top-left-logo {
+    height: 32px;
+    width: auto;
+    border-radius: 6px;
+}
+
+.header-actions-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 15px;
     z-index: 100;
-    /* Higher z-index for nav */
 }
 
 @media (max-width: 767px) {
     .menu-toggle {
         display: flex;
+        position: relative;
+        top: 0;
+        right: 0;
+        z-index: 2001;
     }
 
     .header-actions-wrapper {
@@ -718,17 +748,17 @@ html.dark-mode .app-header h1 {
         top: 0;
         right: -100%;
         /* Hidden off-screen */
-        width: 300px;
+        width: 280px;
         height: 100vh;
         background: var(--card-bg);
         flex-direction: column;
         align-items: flex-start;
-        padding: 100px 40px;
+        padding: 100px 30px;
         gap: 30px;
-        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.4);
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         backdrop-filter: blur(20px);
-        z-index: 100;
+        z-index: 2000;
         margin-top: 0;
     }
 
@@ -777,6 +807,14 @@ html.dark-mode .app-header h1 {
     .btn-upgrade {
         width: 100%;
         margin-top: 10px;
+    }
+
+    .login-trigger {
+        width: 100%;
+        background: var(--primary-main) !important;
+        color: white !important;
+        border: none !important;
+        padding: 15px !important;
     }
 }
 
@@ -843,25 +881,25 @@ html.dark-mode .app-header h1 {
 }
 
 .theme-toggle.left-corner {
-    position: absolute;
-    top: -50px;
+    position: relative;
+    top: 0;
     left: 0;
 }
 
 .menu-toggle {
     display: none;
     flex-direction: column;
-    justify-content: space-between;
-    width: 28px;
-    height: 20px;
-    background: transparent;
-    border: none;
+    justify-content: space-around;
+    width: 32px;
+    height: 32px;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
     cursor: pointer;
-    padding: 0;
-    z-index: 101;
-    position: absolute;
-    top: -48px;
-    right: 0;
+    padding: 6px;
+    z-index: 2001;
+    position: relative;
+    box-shadow: var(--shadow-soft);
 }
 
 .hamburger-bar {
@@ -1494,14 +1532,9 @@ a:hover {
 
 /* Status & Counter Container */
 .status-container {
-    position: fixed;
-    top: 25px;
-    right: 35px;
     display: flex;
-    gap: 12px;
-    z-index: 2000;
+    gap: 8px;
     pointer-events: none;
-    /* Let clicks pass through */
 }
 
 /* Base Badge Style */
