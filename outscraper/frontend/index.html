@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Maps Business Lead Extractor</title>
+    <script>
+        (function () {
+            const theme = localStorage.getItem('theme') || 'light';
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark-mode');
+            }
+        })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-wrapper">
+        <div class="app-container">
+            <header class="app-header">
+                <div class="top-bar">
+                    <div class="top-bar-left">
+                        <div class="fixed-logo-area">
+                            <a href="https://promptix.pro/" target="_blank" class="logo-link">
+                                <img src="logo.jpg" alt="Promptix Logo" class="top-left-logo">
+                            </a>
+                        </div>
+                        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                            <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="5"></circle>
+                                <line x1="12" y1="1" x2="12" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="23"></line>
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                <line x1="1" y1="12" x2="3" y2="12"></line>
+                                <line x1="21" y1="12" x2="23" y2="12"></line>
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                            </svg>
+                            <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" style="display: none;">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="top-bar-right">
+                        <div class="status-container">
+                            <div id="app-status-badge" class="status-badge status-idle">Idle</div>
+                            <div id="live-lead-counter" class="counter-badge hidden">0 Leads</div>
+                        </div>
+                        <button id="menu-toggle" class="menu-toggle" aria-label="Toggle navigation">
+                            <span class="hamburger-bar"></span>
+                            <span class="hamburger-bar"></span>
+                            <span class="hamburger-bar"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <h1>Business Lead Extractor</h1>
+                <p>Extract business leads from Google Maps (Personal Tool)</p>
+            </header>
+
+            <main>
+                <section class="search-section">
+                    <form id="search-form" class="search-form">
+                        <div class="form-group">
+                            <label for="keyword">Keyword</label>
+                            <input type="text" id="keyword" name="keyword" placeholder="e.g., restaurant" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" id="location" name="location" placeholder="e.g., Chennai" required>
+                        </div>
+
+                        <div class="search-actions">
+                            <button type="submit" class="btn btn-primary" id="search-btn">
+                                <span>Search</span>
+                            </button>
+                            <button type="button" class="btn btn-danger" id="stop-btn" disabled>
+                                <span>Stop</span>
+                            </button>
+                        </div>
+                    </form>
+                    <div id="live-status" class="live-status hidden"></div>
+                </section>
+
+                <section class="results-section" id="results-section" style="display: none;">
+                    <div id="status-message"></div>
+                    <div class="section-header">
+                        <h2>Results <span id="result-count" class="badge">0</span></h2>
+                        <div class="export-actions" id="export-actions" style="display: none;">
+                            <button id="export-csv-btn" class="btn btn-sm btn-outline">
+                                Export CSV
+                            </button>
+                            <button id="export-excel-btn" class="btn btn-sm btn-outline">
+                                Export Excel
+                            </button>
+                            <button id="export-pdf-btn" class="btn btn-sm btn-outline">
+                                Export PDF
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table id="leads-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Phone No</th>
+                                    <th>Address</th>
+                                    <th>Website</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leads-body">
+                                <!-- Rows will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="loading-indicator" class="hidden">
+                        <div class="spinner"></div>
+                        <p>Scraping data, please wait...</p>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+    </div>
+
+    <footer class="app-footer">
+        <div class="footer-content">
+            <p>&copy; 2026 <a href="https://promptix.pro/" target="_blank"
+                    style="color: inherit; text-decoration: none; border-bottom: 1px dashed rgba(255,255,255,0.2);">Promptix</a>.
+                All rights reserved. (Personal Use Scraper Tool)</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

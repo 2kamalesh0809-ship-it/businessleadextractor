@@ -1,0 +1,7 @@
+{
+  "name": "google-maps-lead-extractor-frontend",
+  "version": 2,
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/$1" }
+  ]
+}

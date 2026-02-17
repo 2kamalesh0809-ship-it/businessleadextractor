@@ -1,0 +1,12 @@
+{
+    "name": "google-maps-lead-frontend",
+    "version": "1.0.0",
+    "description": "Frontend for Google Maps Lead Extractor",
+    "scripts": {
+        "dev": "npx serve -l 3001 .",
+        "start": "npx serve -l 3001 ."
+    },
+    "dependencies": {
+        "serve": "^14.2.4"
+    }
+}
