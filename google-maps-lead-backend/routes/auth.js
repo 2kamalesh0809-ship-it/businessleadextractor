@@ -7,6 +7,9 @@ const bcrypt = require('bcryptjs');
 // Signup Route
 router.post('/signup', async (req, res) => {
     try {
+        if (process.env.DISABLE_SIGNUP === 'true') {
+            return res.status(403).json({ message: 'Registration is currently disabled' });
+        }
         const { username, password } = req.body;
 
         // Validation
